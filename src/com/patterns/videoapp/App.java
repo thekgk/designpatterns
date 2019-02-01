@@ -27,10 +27,10 @@ public class App {
         //TODO:
         //write movie iterator, series iterator etc.
 
-        playV3(new PrimeVideoShowAdapter(primeVideoShows[0]));
+        presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[0]));
     }
 
-    private void play(Show show) {
+    private void presentShowDetailsV1(Show show) {
         ShowPresenter presenter = null;
         if(show.getType().equals("movie")){
             if(show.getSource().equals("primeVideo"))
@@ -47,7 +47,7 @@ public class App {
         presenter.present(show);
     }
 
-    private void playV2(Show show) {
+    private void presentShowDetailsV2(Show show) {
         System.out.println("show "+ show.getTitle());
 
         ShowPresenterFactory factory = null;
@@ -71,7 +71,7 @@ public class App {
         presenter.present(show);
     }
 
-    private void playV3(Show show) {
+    private void presentShowDetailsV3(Show show) {
         System.out.println("show "+ show.getTitle());
         ShowPresenterFactory factory = new ShowPresenterFactoryImpl(show.getSource());
         ShowPresenter presenter = null;
