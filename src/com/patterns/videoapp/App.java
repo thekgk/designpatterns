@@ -1,5 +1,6 @@
 package com.patterns.videoapp;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class App {
 
         Iterator<Show> netflixShows = new NetflixShowsIterator(getNetflixShows());
         displayBannersV2(netflixShows);
+
+        System.out.println("Movie menu selected");
+        displayBannersV2(new PrimeVideoShowTypeIterator(primeVideoShows, "movie"));
 
         //TODO:
         //write movie iterator, series iterator etc.
@@ -200,8 +204,11 @@ public class App {
     }
 
     public void displayBannersV2(Iterator<Show> shows){
-        shows.forEachRemaining(s ->
-                System.out.println("Banner --- " + s.getBannerURL()));
+        shows.forEachRemaining(s -> displayBanner(s.getBannerURL()));
+    }
+
+    private void displayBanner(String bannerURL) {
+        System.out.println("Banner --- " + bannerURL);
     }
 
     public PrimeVideoShow[] getPrimeVideoShows(){
@@ -242,6 +249,12 @@ public class App {
             PrimeVideoShow show = shows[position];
             position = position + 1;
             return new PrimeVideoShowAdapter(show);
+        }
+    }
+
+    public class PrimeVideoShowTypeIterator extends PrimeVideoShowsIterator {
+        public PrimeVideoShowTypeIterator(PrimeVideoShow[] shows, String type) {
+            super(Arrays.stream(shows).filter(s -> s.type.equals(type)).toArray(PrimeVideoShow[]::new));
         }
     }
 
