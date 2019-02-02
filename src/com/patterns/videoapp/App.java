@@ -8,15 +8,15 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        app.startV2();
+        app.runV2();
     }
 
-    public void startV1() {
+    public void runV1() {
         PrimeVideoShow[] shows = getPrimeVideoShows();
         displayBannersV1(shows);
     }
 
-    public void startV2() {
+    public void runV2() {
         PrimeVideoShow[] primeVideoShows = getPrimeVideoShows();
         Iterator<Show> primeVideos = new PrimeVideoShowsIterator(primeVideoShows);
         displayBannersV2(primeVideos);
@@ -26,7 +26,6 @@ public class App {
 
         //TODO:
         //write movie iterator, series iterator etc.
-
         presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[0]));
     }
 
@@ -72,7 +71,7 @@ public class App {
     }
 
     private void presentShowDetailsV3(Show show) {
-        System.out.println("show "+ show.getTitle());
+        System.out.println("\nSelected show ---- "+ show.getTitle());
         ShowPresenterFactory factory = new ShowPresenterFactoryImpl(show.getSource());
         ShowPresenter presenter = null;
         if(show.getType().equals("movie")){
@@ -201,9 +200,8 @@ public class App {
     }
 
     public void displayBannersV2(Iterator<Show> shows){
-        while (shows.hasNext()){
-            System.out.println(shows.next().getBannerURL());
-        }
+        shows.forEachRemaining(s ->
+                System.out.println("Banner --- " + s.getBannerURL()));
     }
 
     public PrimeVideoShow[] getPrimeVideoShows(){
@@ -275,7 +273,7 @@ public class App {
         }
 
         private void play(Movie movie) {
-            System.out.println("Playing movie" + movie);
+            System.out.println("Playing movie ---> " + movie);
         }
 
         public abstract Movie getMovie(String title);
@@ -288,7 +286,7 @@ public class App {
         }
 
         private void play(Series series) {
-            System.out.println("Playing series" + series);
+            System.out.println("Playing series ---> " + series);
         }
 
         public abstract Series getSeries(String title);
@@ -300,23 +298,32 @@ public class App {
     }
 
     public class ShowPresenterFactoryImpl implements ShowPresenterFactory{
-        private ShowPresenterFactory factory;
+        private String source;
+
+        public ShowPresenterFactoryImpl(String source){
+            this.source = source;
+        }
+
         @Override
         public MoviePresenter moviePresenter() {
-            return factory.moviePresenter();
+            if(source.equals("primeVideo")) {
+                return new PrimeVideoMoviePresenter();
+            }
+            else  if(source.equals("netflix")) {
+                return new NetflixMoviePresenter();
+            }
+            else {
+                throw new UnsupportedOperationException();
+            }
         }
 
         @Override
         public SeriesPresenter seriesPresenter() {
-            return factory.seriesPresenter();
-        }
-
-        public ShowPresenterFactoryImpl(String source){
             if(source.equals("primeVideo")) {
-                factory = new PrimeVideoPresenterFactory();
+                return new PrimeVideoSeriesPresenter();
             }
             else if(source.equals("netflix")) {
-                factory = new NetflixPresenterFactory();
+                return new NetflixSeriesPresenter();
             }
             else {
                 throw new UnsupportedOperationException();
@@ -341,7 +348,7 @@ public class App {
 
         @Override
         public Movie getMovie(String name) {
-            System.out.println("getting movie from Prime Video");
+            System.out.println("Getting movie from Prime Video ----- ");
             return new Movie(name, "90 min", "amazon prime movie");
         }
     }
@@ -350,7 +357,7 @@ public class App {
 
         @Override
         public Series getSeries(String name) {
-            System.out.println("getting series from Prime Video");
+            System.out.println("Getting series from Prime Video ---- ");
             return new Series(name, "10", "amazon prime series");
         }
     }
@@ -372,7 +379,7 @@ public class App {
 
         @Override
         public Movie getMovie(String name) {
-            System.out.println("getting movie from Netflix");
+            System.out.println("Getting movie from Netflix ---- ");
             return new Movie(name, "120 min", "netflix movie");
         }
     }
@@ -381,7 +388,7 @@ public class App {
 
         @Override
         public Series getSeries(String name) {
-            System.out.println("getting series from Netflix");
+            System.out.println("Getting series from Netflix ---- ");
             return new Series(name, "2", "Netflix series");
         }
     }
@@ -399,7 +406,7 @@ public class App {
 
         @Override
         public String toString() {
-            return this.name + "/Length: " + this.length + "/Desc: " + this.description;
+            return this.name + "/ Length: " + this.length + "/ Desc: " + this.description;
         }
     }
 
@@ -416,7 +423,7 @@ public class App {
 
         @Override
         public String toString(){
-            return this.name + "/Seasons: " + this.seasons + "Desc:/ " + this.description;
+            return this.name + "/ Seasons: " + this.seasons + "/ Desc:/ " + this.description;
         }
     }
 }
