@@ -1,4 +1,7 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.primevideo;
+
+import com.patterns.videoapp.ui.Series;
+import com.patterns.videoapp.ui.SeriesPresenter;
 
 public class PrimeVideoSeriesPresenter extends SeriesPresenter {
     @Override

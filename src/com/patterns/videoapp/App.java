@@ -1,5 +1,12 @@
 package com.patterns.videoapp;
 
+import com.patterns.videoapp.netflix.*;
+import com.patterns.videoapp.primevideo.*;
+import com.patterns.videoapp.ui.Show;
+import com.patterns.videoapp.ui.ShowPresenter;
+import com.patterns.videoapp.ui.ShowPresenterFactory;
+import com.patterns.videoapp.ui.ShowPresenterFactoryImpl;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

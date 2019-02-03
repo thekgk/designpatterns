@@ -1,4 +1,9 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.netflix;
+
+import com.patterns.videoapp.App;
+import com.patterns.videoapp.ui.MoviePresenter;
+import com.patterns.videoapp.ui.SeriesPresenter;
+import com.patterns.videoapp.ui.ShowPresenterFactory;
 
 public class NetflixPresenterFactory implements ShowPresenterFactory {
 

@@ -1,4 +1,4 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.ui;
 
 public class LoggingShowPresenter implements ShowPresenter {
     private ShowPresenter wrappedPresenter;

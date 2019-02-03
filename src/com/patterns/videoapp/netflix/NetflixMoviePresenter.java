@@ -1,4 +1,7 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.netflix;
+
+import com.patterns.videoapp.ui.Movie;
+import com.patterns.videoapp.ui.MoviePresenter;
 
 public class NetflixMoviePresenter extends MoviePresenter {
 

@@ -1,4 +1,4 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.primevideo;
 
 import java.util.Arrays;
 

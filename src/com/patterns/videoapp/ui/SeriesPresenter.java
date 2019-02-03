@@ -1,4 +1,4 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.ui;
 
 public abstract class SeriesPresenter implements ShowPresenter{
     @Override

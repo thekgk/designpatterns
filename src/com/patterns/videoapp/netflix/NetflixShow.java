@@ -1,4 +1,4 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.netflix;
 
 public class NetflixShow {
     private String name;

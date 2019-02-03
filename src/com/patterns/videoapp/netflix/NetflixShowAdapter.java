@@ -1,4 +1,6 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.netflix;
+
+import com.patterns.videoapp.ui.Show;
 
 public class NetflixShowAdapter implements Show {
     private NetflixShow netflixShow;

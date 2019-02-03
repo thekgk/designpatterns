@@ -1,4 +1,6 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.netflix;
+
+import com.patterns.videoapp.ui.Show;
 
 import java.util.Iterator;
 import java.util.Map;

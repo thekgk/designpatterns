@@ -1,4 +1,6 @@
-package com.patterns.videoapp;
+package com.patterns.videoapp.primevideo;
+
+import com.patterns.videoapp.ui.Show;
 
 public class PrimeVideoShowAdapter implements Show {
     private PrimeVideoShow primeVideoShow;
