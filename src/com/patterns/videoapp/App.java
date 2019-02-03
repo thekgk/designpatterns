@@ -26,11 +26,15 @@ public class App {
         displayBannersV2(netflixShows);
 
         System.out.println("Movie menu selected");
-        displayBannersV2(new PrimeVideoShowTypeIterator(primeVideoShows, "movie"));
+
+        displayBannersV2(
+                new PrimeVideoShowTypeIterator(primeVideoShows, "movie"));
 
         //TODO:
         //write movie iterator, series iterator etc.
         presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[0]));
+
+        presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[1]));
     }
 
     private void presentShowDetailsV1(Show show) {
@@ -254,7 +258,10 @@ public class App {
 
     public class PrimeVideoShowTypeIterator extends PrimeVideoShowsIterator {
         public PrimeVideoShowTypeIterator(PrimeVideoShow[] shows, String type) {
-            super(Arrays.stream(shows).filter(s -> s.type.equals(type)).toArray(PrimeVideoShow[]::new));
+            super(Arrays.stream(shows)
+                    .filter(s -> s.type.equals(type))
+                    .toArray(PrimeVideoShow[]::new)
+            );
         }
     }
 
@@ -305,9 +312,22 @@ public class App {
         public abstract Series getSeries(String title);
     }
 
+    public class LoggingShowPresenter implements ShowPresenter {
+        private ShowPresenter wrappedPresenter;
+
+        public LoggingShowPresenter(ShowPresenter p){
+            this.wrappedPresenter = p;
+        }
+        @Override
+        public void present(Show show) {
+            System.out.println("Logging presentation of show --- " + show.getTitle());
+            wrappedPresenter.present(show);
+        }
+    }
+
     public interface ShowPresenterFactory {
-        MoviePresenter moviePresenter();
-        SeriesPresenter seriesPresenter();
+        ShowPresenter moviePresenter();
+        ShowPresenter seriesPresenter();
     }
 
     public class ShowPresenterFactoryImpl implements ShowPresenterFactory{
@@ -318,9 +338,9 @@ public class App {
         }
 
         @Override
-        public MoviePresenter moviePresenter() {
+        public ShowPresenter moviePresenter() {
             if(source.equals("primeVideo")) {
-                return new PrimeVideoMoviePresenter();
+                return new LoggingShowPresenter(new PrimeVideoMoviePresenter());
             }
             else  if(source.equals("netflix")) {
                 return new NetflixMoviePresenter();
@@ -331,7 +351,7 @@ public class App {
         }
 
         @Override
-        public SeriesPresenter seriesPresenter() {
+        public ShowPresenter seriesPresenter() {
             if(source.equals("primeVideo")) {
                 return new PrimeVideoSeriesPresenter();
             }
