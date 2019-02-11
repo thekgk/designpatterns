@@ -2,10 +2,7 @@ package com.patterns.videoapp;
 
 import com.patterns.videoapp.netflix.*;
 import com.patterns.videoapp.primevideo.*;
-import com.patterns.videoapp.ui.Show;
-import com.patterns.videoapp.ui.ShowPresenter;
-import com.patterns.videoapp.ui.ShowPresenterFactory;
-import com.patterns.videoapp.ui.ShowPresenterFactoryImpl;
+import com.patterns.videoapp.ui.*;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,14 +29,13 @@ public class App {
         displayBannersV2(netflixShows);
 
         System.out.println("Movie menu selected");
-
         displayBannersV2(
                 new PrimeVideoShowTypeIterator(primeVideoShows, "movie"));
 
-        //TODO:
-        //write movie iterator, series iterator etc.
+        System.out.println("Grand Tour Series selected");
         presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[0]));
 
+        System.out.println("Prime Movie selected");
         presentShowDetailsV3(new PrimeVideoShowAdapter(primeVideoShows[1]));
     }
 
@@ -97,18 +93,16 @@ public class App {
         presenter.present(show);
     }
 
+    private void displayBannersV2(Iterator<Show> shows){
+        BannerCarousel bannerCarousel = new BannerCarousel(shows);
+        bannerCarousel.displayBannersV2();
+    }
+
+    //Added here for brevity. Should be in separate class.
     public void displayBannersV1(PrimeVideoShow[] shows) {
         for(PrimeVideoShow show : shows){
             System.out.println(show.getBannerURL());
         }
-    }
-
-    public void displayBannersV2(Iterator<Show> shows){
-        shows.forEachRemaining(s -> displayBanner(s.getBannerURL()));
-    }
-
-    private void displayBanner(String bannerURL) {
-        System.out.println("Banner --- " + bannerURL);
     }
 
     public PrimeVideoShow[] getPrimeVideoShows(){
